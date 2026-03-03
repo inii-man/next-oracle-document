@@ -1,0 +1,161 @@
+{
+    "info": {
+        "name": "Document Management API",
+        "description": "Postman collection for CRUD endpoints - Chapter 5 & 6",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:8000"
+        },
+        {
+            "key": "doc_id",
+            "value": "1"
+        }
+    ],
+    "item": [
+        {
+            "name": "Health Check",
+            "request": {
+                "method": "GET",
+                "url": "{{base_url}}/health"
+            }
+        },
+        {
+            "name": "List Documents (all)",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "{{base_url}}/v1/documents?page=1&limit=20",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "v1",
+                        "documents"
+                    ],
+                    "query": [
+                        {
+                            "key": "page",
+                            "value": "1"
+                        },
+                        {
+                            "key": "limit",
+                            "value": "20"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "List Documents (category filter)",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "{{base_url}}/v1/documents?category=POLICY",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "v1",
+                        "documents"
+                    ],
+                    "query": [
+                        {
+                            "key": "category",
+                            "value": "POLICY"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "List Documents (search)",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "{{base_url}}/v1/documents?search=laporan",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "v1",
+                        "documents"
+                    ],
+                    "query": [
+                        {
+                            "key": "search",
+                            "value": "laporan"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Get Document by ID",
+            "request": {
+                "method": "GET",
+                "url": "{{base_url}}/v1/documents/{{doc_id}}"
+            }
+        },
+        {
+            "name": "Create Document",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": "{{base_url}}/v1/documents",
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"document_code\": \"DOC-004\",\n  \"title\": \"Laporan Keuangan Q4 2025\",\n  \"category\": \"REPORT\",\n  \"content\": \"Isi laporan keuangan Q4...\",\n  \"status\": \"DRAFT\"\n}"
+                }
+            }
+        },
+        {
+            "name": "Update Document",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": "{{base_url}}/v1/documents/{{doc_id}}",
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"title\": \"Laporan Keuangan Q4 2025 (Updated)\",\n  \"status\": \"ACTIVE\"\n}"
+                }
+            }
+        },
+        {
+            "name": "Delete Document (soft)",
+            "request": {
+                "method": "DELETE",
+                "url": "{{base_url}}/v1/documents/{{doc_id}}"
+            }
+        },
+        {
+            "name": "Create - Validation Error (422)",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": "{{base_url}}/v1/documents",
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"document_code\": \"\",\n  \"title\": \"\",\n  \"category\": \"INVALID\"\n}"
+                }
+            }
+        }
+    ]
+}
